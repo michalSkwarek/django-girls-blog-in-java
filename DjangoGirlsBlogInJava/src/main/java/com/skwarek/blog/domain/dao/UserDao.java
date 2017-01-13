@@ -1,7 +1,7 @@
-package com.skwarek.blog.data.dao;
+package com.skwarek.blog.domain.dao;
 
-import com.skwarek.blog.data.dao.generic.GenericDao;
-import com.skwarek.blog.data.entity.User;
+import com.skwarek.blog.domain.dao.generic.GenericDao;
+import com.skwarek.blog.domain.entity.User;
 
 /**
  * Created by Michal on 05/01/2017.

@@ -1,7 +1,7 @@
 package com.skwarek.blog.service.impl;
 
-import com.skwarek.blog.data.dao.CommentDao;
-import com.skwarek.blog.data.entity.Comment;
+import com.skwarek.blog.domain.dao.CommentDao;
+import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.service.CommentService;
 import com.skwarek.blog.service.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

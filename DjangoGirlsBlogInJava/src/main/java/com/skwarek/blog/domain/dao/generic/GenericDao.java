@@ -1,4 +1,4 @@
-package com.skwarek.blog.data.dao.generic;
+package com.skwarek.blog.domain.dao.generic;
 
 import java.io.Serializable;
 import java.util.List;

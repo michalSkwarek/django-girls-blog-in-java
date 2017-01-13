@@ -1,5 +1,6 @@
-package com.skwarek.blog.data.entity;
+package com.skwarek.blog.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -29,6 +30,7 @@ public class Comment extends AbstractEntity implements Serializable {
     @Column(name = "approved_comment")
     private boolean approvedComment;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;

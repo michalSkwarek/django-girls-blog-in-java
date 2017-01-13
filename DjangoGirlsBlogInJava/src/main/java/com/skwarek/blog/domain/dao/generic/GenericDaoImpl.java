@@ -1,10 +1,10 @@
-package com.skwarek.blog.data.dao.generic;
+package com.skwarek.blog.domain.dao.generic;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -18,8 +18,8 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> implements Gene
 
     private Class<E> daoType;
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     public GenericDaoImpl() {
@@ -28,8 +28,8 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> implements Gene
         daoType = (Class<E>) parameterizedType.getActualTypeArguments()[0];
     }
 
-    protected Session getSession() {
-        return sessionFactory.getCurrentSession();
+    protected Session getSession()  {
+        return entityManager.unwrap(Session.class);
     }
 
     @Override
@@ -39,7 +39,7 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> implements Gene
 
     @Override
     public E read(PK id) {
-        return getSession().get(daoType, id);
+        return (E) getSession().get(daoType, id);
     }
 
     @Override

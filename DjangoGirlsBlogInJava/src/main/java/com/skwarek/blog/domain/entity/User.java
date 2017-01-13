@@ -1,5 +1,6 @@
-package com.skwarek.blog.data.entity;
+package com.skwarek.blog.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -25,6 +26,7 @@ public class User extends AbstractEntity implements Serializable {
 
     private String role;
 
+    @JsonManagedReference
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
     private List<Post> posts = new ArrayList<>();

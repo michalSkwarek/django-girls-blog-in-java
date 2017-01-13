@@ -1,15 +1,13 @@
 package com.skwarek.blog.service.impl;
 
-import com.skwarek.blog.data.dao.CommentDao;
-import com.skwarek.blog.data.dao.PostDao;
-import com.skwarek.blog.data.dao.UserDao;
-import com.skwarek.blog.data.entity.Comment;
-import com.skwarek.blog.data.entity.Post;
+import com.skwarek.blog.domain.dao.CommentDao;
+import com.skwarek.blog.domain.dao.PostDao;
+import com.skwarek.blog.domain.dao.UserDao;
+import com.skwarek.blog.domain.entity.Comment;
+import com.skwarek.blog.domain.entity.Post;
 import com.skwarek.blog.service.PostService;
 import com.skwarek.blog.service.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,13 +47,13 @@ public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements P
         return postDao.findAllDrafts();
     }
 
-    @Override
-    public void createPost(Post post) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        post.setAuthor(userDao.findUserByUsername(auth.getName()));
-        post.setCreatedDate(new Date());
-        postDao.create(post);
-    }
+//    @Override
+//    public void createPost(Post post) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        post.setAuthor(userDao.findUserByUsername(auth.getName()));
+//        post.setCreatedDate(new Date());
+//        postDao.create(post);
+//    }
 
     @Override
     public void updatePost(Post post) {

@@ -1,6 +1,6 @@
 package com.skwarek.blog.service;
 
-import com.skwarek.blog.data.entity.Comment;
+import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.service.generic.GenericService;
 
 /**

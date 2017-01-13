@@ -1,7 +1,7 @@
 package com.skwarek.blog.service;
 
-import com.skwarek.blog.data.entity.Comment;
-import com.skwarek.blog.data.entity.Post;
+import com.skwarek.blog.domain.entity.Comment;
+import com.skwarek.blog.domain.entity.Post;
 import com.skwarek.blog.service.generic.GenericService;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface PostService extends GenericService<Post, Long> {
 
     List<Post> findAllDrafts();
 
-    void createPost(Post post);
+//    void createPost(Post post);
 
     void updatePost(Post post);
 

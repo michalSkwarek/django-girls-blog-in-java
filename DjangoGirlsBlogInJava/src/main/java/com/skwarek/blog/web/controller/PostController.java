@@ -1,7 +1,7 @@
 package com.skwarek.blog.web.controller;
 
-import com.skwarek.blog.data.entity.Comment;
-import com.skwarek.blog.data.entity.Post;
+import com.skwarek.blog.domain.entity.Comment;
+import com.skwarek.blog.domain.entity.Post;
 import com.skwarek.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by Michal on 02/01/2017.
  */
-@Controller
+@RestController
 public class PostController {
 
     private final static String VIEWS_POST_LIST = "blog/post_list";
@@ -37,12 +38,13 @@ public class PostController {
         this.postService = postService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showPublishedPosts(Model model) {
+    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    public List<Post> showPublishedPosts() {
 
         List<Post> posts = postService.findAllPublishedPosts();
-        model.addAttribute("posts", posts);
-        return VIEWS_POST_LIST;
+//        model.addAttribute("posts", posts);
+//        return VIEWS_POST_LIST;
+        return posts;
     }
 
     @RequestMapping(value = "/drafts", method = RequestMethod.GET)
@@ -79,7 +81,7 @@ public class PostController {
             return VIEWS_POST_FORM;
         }
 
-        postService.createPost(post);
+//        postService.createPost(post);
         return REDIRECT_TO + HOME_PAGE;
     }
 

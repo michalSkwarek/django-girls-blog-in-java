@@ -1,5 +1,7 @@
-package com.skwarek.blog.data.entity;
+package com.skwarek.blog.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
@@ -20,6 +22,7 @@ public class Post extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -7880798132853619385L;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
@@ -37,6 +40,7 @@ public class Post extends AbstractEntity implements Serializable {
     @Column(name = "published_date")
     private Date publishedDate;
 
+    @JsonManagedReference
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();

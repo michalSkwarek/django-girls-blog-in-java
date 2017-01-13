@@ -1,6 +1,6 @@
 package com.skwarek.blog.web.controller;
 
-import com.skwarek.blog.data.entity.Comment;
+import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

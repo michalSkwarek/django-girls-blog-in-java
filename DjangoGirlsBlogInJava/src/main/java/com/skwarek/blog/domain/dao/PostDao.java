@@ -1,8 +1,7 @@
-package com.skwarek.blog.data.dao;
+package com.skwarek.blog.domain.dao;
 
-import com.skwarek.blog.data.dao.generic.GenericDao;
-import com.skwarek.blog.data.entity.Comment;
-import com.skwarek.blog.data.entity.Post;
+import com.skwarek.blog.domain.dao.generic.GenericDao;
+import com.skwarek.blog.domain.entity.Post;
 
 import java.util.List;
 

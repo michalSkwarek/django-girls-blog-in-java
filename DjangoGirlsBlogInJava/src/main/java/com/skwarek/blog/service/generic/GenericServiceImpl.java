@@ -1,6 +1,6 @@
 package com.skwarek.blog.service.generic;
 
-import com.skwarek.blog.data.dao.generic.GenericDao;
+import com.skwarek.blog.domain.dao.generic.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

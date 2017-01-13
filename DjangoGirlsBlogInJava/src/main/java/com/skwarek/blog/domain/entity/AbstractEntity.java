@@ -1,4 +1,4 @@
-package com.skwarek.blog.data.entity;
+package com.skwarek.blog.domain.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

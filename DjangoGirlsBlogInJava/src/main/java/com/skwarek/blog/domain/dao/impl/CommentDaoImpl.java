@@ -1,8 +1,8 @@
-package com.skwarek.blog.data.dao.impl;
+package com.skwarek.blog.domain.dao.impl;
 
-import com.skwarek.blog.data.dao.CommentDao;
-import com.skwarek.blog.data.dao.generic.GenericDaoImpl;
-import com.skwarek.blog.data.entity.Comment;
+import com.skwarek.blog.domain.dao.CommentDao;
+import com.skwarek.blog.domain.dao.generic.GenericDaoImpl;
+import com.skwarek.blog.domain.entity.Comment;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

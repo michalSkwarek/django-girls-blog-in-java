@@ -38,6 +38,7 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> implements Gene
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public E read(PK id) {
         return (E) getSession().get(daoType, id);
     }

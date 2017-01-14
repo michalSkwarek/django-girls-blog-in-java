@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="BlogApp">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -13,14 +13,14 @@
     <script src="/js/controller/controller.js"></script>
     <title>Django Girls Blog in Java</title>
 </head>
-<body>
+<body ng-app="BlogApp">
 
 <div class="page-header">
     <!--<div sec:authorize="hasRole('ROLE_ADMIN')">-->
     <a href="/post/new" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
     <a href="/drafts" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
     <p class="top-menu">Hello ${pageContext.request.userPrincipal.name}
-        <small>(<a href="#/accounts/logout">Log out</a>)</small>
+        <small>(<a href="/accounts/logout">Log out</a>)</small>
     </p>
     <!--</div>-->
     <!--<div sec:authorize="!hasRole('ROLE_ADMIN')">-->

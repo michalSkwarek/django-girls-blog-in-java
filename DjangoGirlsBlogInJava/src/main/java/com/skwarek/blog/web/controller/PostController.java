@@ -4,13 +4,11 @@ import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.domain.entity.Post;
 import com.skwarek.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -40,31 +38,17 @@ public class PostController {
 
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public List<Post> showPublishedPosts() {
-
-        List<Post> posts = postService.findAllPublishedPosts();
-//        model.addAttribute("posts", posts);
-//        return VIEWS_POST_LIST;
-        return posts;
+        return postService.findAllPublishedPosts();
     }
 
     @RequestMapping(value = "/drafts", method = RequestMethod.GET)
-    public String showDrafts(Model model) {
-
-        List<Post> posts = postService.findAllDrafts();
-        model.addAttribute("posts", posts);
-        return VIEWS_DRAFTS;
+    public List<Post> showDrafts() {
+        return postService.findAllDrafts();
     }
 
     @RequestMapping(value = "/post/{postId}", method = RequestMethod.GET)
-    public String showPost(Model model, @PathVariable long postId) {
-
-        Post post = postService.read(postId);
-        model.addAttribute("post", post);
-
-        if (post != null) {
-            model.addAttribute("comments", post.getComments());
-        }
-        return VIEWS_POST_DETAIL;
+    public Post showPost(@PathVariable long postId) {
+        return postService.read(postId);
     }
 
     @RequestMapping(value = "/post/new", method = RequestMethod.GET)
@@ -81,7 +65,7 @@ public class PostController {
             return VIEWS_POST_FORM;
         }
 
-//        postService.createPost(post);
+        postService.createPost(post);
         return REDIRECT_TO + HOME_PAGE;
     }
 
@@ -104,16 +88,14 @@ public class PostController {
         return REDIRECT_TO + HOME_PAGE;
     }
 
-    @RequestMapping(value = "post/{postId}/publish", method = RequestMethod.GET)
-    public String publishPost(Model model, @PathVariable long postId) {
-
+    @RequestMapping(value = "post/{postId}/publish", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void publishPost(@PathVariable long postId) {
         Post post = postService.read(postId);
         postService.publishPost(post);
-        model.addAttribute("post", post);
-        return VIEWS_POST_DETAIL;
     }
 
-    @RequestMapping(value = "/post/{postId}/remove", method = RequestMethod.GET)
+    @RequestMapping(value = "/post/{postId}/remove", method = RequestMethod.DELETE)
     public String removePost(@PathVariable long postId) {
 
         postService.removePost(postId);

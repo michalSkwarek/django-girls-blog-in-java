@@ -2,13 +2,17 @@ var myApp = angular.module('BlogApp', ['ngRoute','ngResource']);
 
 myApp.config(function($routeProvider, $locationProvider){
     $routeProvider
-        .when('/posts',{
+        .when('/posts', {
             templateUrl: '/views/blog/post_list.html',
-            controller: 'postController'
+            controller: 'postsController'
         })
-        .when('/roles',{
-            templateUrl: '/views/blog/roles.html',
-            controller: 'rolesController'
+        .when('/drafts', {
+            templateUrl: '/views/blog/post_draft_list.html',
+            controller: 'draftsController'
+        })
+        .when('/post/:postId', {
+            templateUrl: '/views/blog/post_detail.html',
+            controller: 'postController'
         })
         .otherwise(
             { redirectTo: '/'}

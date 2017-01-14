@@ -1,12 +1,63 @@
-myApp.controller('postController', function ($scope, $http) {
+myApp.controller('postsController', function ($scope, $http) {
 
-    $http({
-        method: 'GET',
-        url: '/posts'
-    }).then(function successCallback(response) {
-        $scope.posts = response.data;
-    });
+    $scope.showPosts = function() {
+        $http.get('/posts').then(function(response){
+            $scope.posts = response.data;
+        });
+    };
+
+    $scope.showPosts();
 });
+
+myApp.controller('draftsController', function ($scope, $http) {
+
+    $scope.showDrafts = function() {
+        $http.get('/drafts').then(function(response){
+            $scope.drafts = response.data;
+        });
+    };
+
+    $scope.showDrafts();
+});
+
+myApp.controller('postController', function ($scope, $http, $routeParams) {
+    var postId = $routeParams.postId;
+
+    $scope.showPost = function() {
+        $http.get('/post/' + postId).then(function(response){
+            $scope.post = response.data;
+        });
+    };
+
+    $scope.publishPost = function () {
+        $http.put('/post/' + postId + '/publish')
+            .then(function () {
+                $scope.showPost($http.get('/post/' + postId));
+            })
+    };
+
+    $scope.approveComment = function (commentId) {
+        $http.put('/comment/' + commentId + '/approve')
+            .then(function () {
+                $scope.showPost($http.get('/post/' + postId));
+            })
+    };
+
+    $scope.removeComment = function(commentId) {
+        $http.delete('/comment/' + commentId + '/remove')
+            .then(function () {
+                $scope.showPost($http.get('/post/' + postId));
+            });
+    };
+
+    $scope.showPost();
+});
+
+
+
+
+
+
 
 //
 // myApp.controller('rolesController', function($scope) {

@@ -47,13 +47,14 @@ public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements P
         return postDao.findAllDrafts();
     }
 
-//    @Override
-//    public void createPost(Post post) {
+    @Override
+    public void createPost(Post post) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        post.setAuthor(userDao.findUserByUsername(auth.getName()));
-//        post.setCreatedDate(new Date());
-//        postDao.create(post);
-//    }
+        post.setAuthor(null);
+        post.setCreatedDate(new Date());
+        postDao.create(post);
+    }
 
     @Override
     public void updatePost(Post post) {

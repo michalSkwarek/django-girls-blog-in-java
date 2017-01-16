@@ -10,7 +10,7 @@
     <!--<security:authorize access="hasRole('ROLE_ADMIN')">-->
     <a class="btn btn-default" href="/post/{{post.id}}/edit"><span
             class="glyphicon glyphicon-pencil"></span></a>
-    <a class="btn btn-default" href="/post/{{post.id}}/remove"><span
+    <a class="btn btn-default" ng-click="removePost(post.id)"><span
             class="glyphicon glyphicon-remove"></span></a>
     <!--</security:authorize>-->
 

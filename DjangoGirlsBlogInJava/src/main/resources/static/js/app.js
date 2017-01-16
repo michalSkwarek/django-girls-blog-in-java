@@ -14,6 +14,18 @@ myApp.config(function($routeProvider, $locationProvider){
             templateUrl: '/views/blog/post_detail.html',
             controller: 'postController'
         })
+        .when('/post/new', {
+            templateUrl: '/views/blog/post_edit.html',
+            controller: 'postsController'
+        })
+        .when('/post/:postId/edit', {
+            templateUrl: '/views/blog/post_edit.html',
+            controller: 'postController'
+        })
+        .when('/post/:postId/comment', {
+            templateUrl: '/views/blog/add_comment_to_post.html',
+            controller: 'postController'
+        })
         .otherwise(
             { redirectTo: '/'}
         );

@@ -1,37 +1,13 @@
 <h1>New post</h1>
-<form:form modelAttribute="post" method="post" class="post-form">
-    <form:hidden path="id" />
-
+<form class="post-form">
     <p>Title:</p>
-    <form:errors path="title" />
-    <form:input path="title" id="title"/>
+    <p ng-show="post.title.$error.required">Please fill in this field.</p>
+    <input type="text" ng-model="post.title" ng-required="true"/>
 
     <p>Text:</p>
-    <form:errors path="text" />
-    <form:input path="text" id="text"/>
-    <%--<textarea name="text" rows="10"></textarea>--%>
+    <p ng-show="post.text.$error.required">Please fill in this field.</p>
+    <textarea rows="10" ng-model="post.text" ng-required="true"></textarea>
 
-    <button type="submit" class="save btn btn-default">Save</button>
-</form:form>
-
-
-
-
-
-
-
-<!--<h1>New post</h1>-->
-<!--<form:form modelAttribute="post" method="post" class="post-form">-->
-    <!--<form:hidden path="id" />-->
-
-    <!--<p>Title:</p>-->
-    <!--<form:errors path="title" />-->
-    <!--<form:input path="title" id="title"/>-->
-
-    <!--<p>Text:</p>-->
-    <!--<form:errors path="text" />-->
-    <!--<form:input path="text" id="text"/>-->
-    <!--<%&#45;&#45;<textarea name="text" rows="10"></textarea>&#45;&#45;%>-->
-
-    <!--<button type="submit" class="save btn btn-default">Save</button>-->
-<!--</form:form>-->
+    <button type="submit" class="save btn btn-default" ng-click="addNewPost(post)">Save</button>
+    <!--<button type="submit" class="save btn btn-default" ng-click="editPost(post)">Save</button>-->
+</form>

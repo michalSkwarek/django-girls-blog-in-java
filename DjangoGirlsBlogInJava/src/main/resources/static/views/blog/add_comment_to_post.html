@@ -1,15 +1,12 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <h1>New comment</h1>
-<form:form modelAttribute="comment" method="post" class="post-form">
+<form class="post-form">
     <p>Author:</p>
-    <form:errors path="author" />
-    <form:input path="author" id="author"/>
+    <p ng-show="comment.author.$error.required">Please fill in this field.</p>
+    <input type="text" ng-model="comment.author" ng-required="true"/>
 
     <p>Text:</p>
-    <form:errors path="text" />
-    <form:input path="text" id="text"/>
-    <%--<textarea name="text" rows="10"></textarea>--%>
+    <p ng-show="post.comment.$error.required">Please fill in this field.</p>
+    <textarea rows="10" ng-model="comment.text" ng-required="true"></textarea>
 
-    <button type="submit" class="save btn btn-default">Send</button>
-</form:form>
+    <button type="submit" class="save btn btn-default" ng-click="addNewComment(comment)">Send</button>
+</form>

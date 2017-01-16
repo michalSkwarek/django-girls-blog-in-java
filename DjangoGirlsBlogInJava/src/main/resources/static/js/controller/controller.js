@@ -1,8 +1,14 @@
-myApp.controller('postsController', function ($scope, $http) {
+myApp.controller('postsController', function ($scope, $http, $location) {
 
     $scope.showPosts = function() {
         $http.get('/posts').then(function(response){
             $scope.posts = response.data;
+        });
+    };
+
+    $scope.addNewPost = function(post) {
+        $http.post('/post/new', post).then(function () {
+            $location.path('/posts');
         });
     };
 
@@ -20,8 +26,20 @@ myApp.controller('draftsController', function ($scope, $http) {
     $scope.showDrafts();
 });
 
-myApp.controller('postController', function ($scope, $http, $routeParams) {
+myApp.controller('postController', function ($scope, $http, $routeParams, $location) {
     var postId = $routeParams.postId;
+
+    $scope.addNewComment = function (comment) {
+      $http.post('/post/' + postId + '/comment', comment).then(function () {
+          $location.path('/post/' + postId);
+      });
+    };
+
+    $scope.editPost = function(post) {
+        $http.put('/post/' + post.id + '/edit', post).then(function () {
+            $location.path('/posts');
+        });
+    };
 
     $scope.showPost = function() {
         $http.get('/post/' + postId).then(function(response){
@@ -32,21 +50,28 @@ myApp.controller('postController', function ($scope, $http, $routeParams) {
     $scope.publishPost = function () {
         $http.put('/post/' + postId + '/publish')
             .then(function () {
-                $scope.showPost($http.get('/post/' + postId));
+                $scope.showPost();
             })
+    };
+
+    $scope.removePost = function (postId) {
+        $http.delete('/post/' + postId + '/remove')
+            .then(function () {
+                $scope.showPosts();
+            });
     };
 
     $scope.approveComment = function (commentId) {
         $http.put('/comment/' + commentId + '/approve')
             .then(function () {
-                $scope.showPost($http.get('/post/' + postId));
+                $scope.showPost();
             })
     };
 
     $scope.removeComment = function(commentId) {
         $http.delete('/comment/' + commentId + '/remove')
             .then(function () {
-                $scope.showPost($http.get('/post/' + postId));
+                $scope.showPost();
             });
     };
 

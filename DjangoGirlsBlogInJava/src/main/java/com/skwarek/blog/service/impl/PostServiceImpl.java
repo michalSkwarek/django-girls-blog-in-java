@@ -61,7 +61,7 @@ public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements P
         Post oldPost = postDao.read(post.getId());
         oldPost.setTitle(post.getTitle());
         oldPost.setText(post.getText());
-        postDao.update(oldPost);
+        postDao.update(post);
     }
 
     @Override

@@ -24,7 +24,8 @@ public class CommentServiceImpl extends GenericServiceImpl<Comment, Long> implem
     }
 
     @Override
-    public void approve(Comment comment) {
+    public void approve(long commentId) {
+        Comment comment = commentDao.read(commentId);
         comment.setApprovedComment(true);
         commentDao.update(comment);
     }

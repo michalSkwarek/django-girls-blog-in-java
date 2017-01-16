@@ -4,7 +4,6 @@ import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.domain.entity.Post;
 import com.skwarek.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,14 +47,11 @@ public class PostController {
     }
 
     @RequestMapping(value = "post/{postId}/publish", method = RequestMethod.PUT)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void publishPost(@PathVariable long postId) {
-        Post post = postService.read(postId);
-        postService.publishPost(post);
+        postService.publishPost(postId);
     }
 
     @RequestMapping(value = "/post/{postId}/remove", method = RequestMethod.DELETE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void removePost(@PathVariable long postId) {
         postService.removePost(postId);
     }

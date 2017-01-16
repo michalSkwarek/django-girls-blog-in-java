@@ -8,7 +8,7 @@ import com.skwarek.blog.service.generic.GenericService;
  */
 public interface CommentService extends GenericService<Comment, Long> {
 
-    void approve(Comment comment);
+    void approve(long commentId);
 
     boolean removeComment(long commentId);
 }

@@ -19,7 +19,7 @@ public interface PostService extends GenericService<Post, Long> {
 
     void updatePost(Post post);
 
-    void publishPost(Post post);
+    void publishPost(long postId);
 
     void addCommentToPost(Comment comment, long postId);
 

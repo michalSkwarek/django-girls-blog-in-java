@@ -65,7 +65,8 @@ public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements P
     }
 
     @Override
-    public void publishPost(Post post) {
+    public void publishPost(long postId) {
+        Post post = postDao.read(postId);
         post.setPublishedDate(new Date());
         postDao.update(post);
     }

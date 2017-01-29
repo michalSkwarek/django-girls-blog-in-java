@@ -2,17 +2,13 @@
     <div class="date" ng-if="post.publishedDate">
         {{post.publishedDate | date:'dd-MM-yyyy HH:mm:ss'}}
     </div>
-    <div class="date" ng-if="!post.publishedDate">
-        <a class="btn btn-default" ng-click="publishPost()">Publish</a>
-    </div>
+    <a class="btn btn-default" ng-click="publishPost()" ng-if="!post.publishedDate">Publish</a>
 
 
-    <!--<security:authorize access="hasRole('ROLE_ADMIN')">-->
-    <a class="btn btn-default" href="/post/{{post.id}}/edit"><span
+    <a class="btn btn-default" href="/post/{{post.id}}/edit" ng-show="authenticated"><span
             class="glyphicon glyphicon-pencil"></span></a>
-    <a class="btn btn-default" ng-click="removePost(post.id)"><span
+    <a class="btn btn-default" ng-click="removePost(post.id)" ng-show="authenticated"><span
             class="glyphicon glyphicon-remove"></span></a>
-    <!--</security:authorize>-->
 
     <h1>{{post.title}}</h1>
     <p>{{post.text}}</p>
@@ -26,8 +22,7 @@
 </p>
 
 
-<!--<security:authorize access="hasRole('ROLE_ADMIN')">-->
-<div class="comment" ng-repeat="comment in post.comments">
+<div class="comment" ng-repeat="comment in post.comments" ng-show="authenticated">
     <div class="date">
         {{comment.createdDate | date:'dd-MM-yyyy HH:mm:ss'}}
         <a class="btn btn-default" ng-if="!comment.approvedComment"
@@ -40,14 +35,11 @@
     <strong>{{comment.author}}</strong>
     <p>{{comment.text}}</p>
 </div>
-<!--</security:authorize>-->
 
-<!--<security:authorize access="!hasRole('ROLE_ADMIN')">-->
-<div class="comment" ng-repeat="comment in post.comments" ng-if="comment.approvedComment">
+<div class="comment" ng-repeat="comment in post.comments" ng-if="comment.approvedComment" ng-show="!authenticated">
     <div class="date">
         {{comment.createdDate | date:'dd-MM-yyyy HH:mm:ss'}}
     </div>
     <strong>{{comment.author}}</strong>
     <p>{{comment.text}}</p>
 </div>
-<!--</security:authorize>-->

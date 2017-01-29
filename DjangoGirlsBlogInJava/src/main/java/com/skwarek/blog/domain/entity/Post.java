@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,10 +26,8 @@ public class Post extends AbstractEntity implements Serializable {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @NotEmpty(message = "{notEmpty}")
     private String title;
 
-    @NotEmpty(message = "{notEmpty}")
     @Type(type = "text")
     private String text;
 
@@ -46,16 +43,6 @@ public class Post extends AbstractEntity implements Serializable {
     private List<Comment> comments = new ArrayList<>();
 
     public Post() { }
-
-    public int approvedCommentCounter() {
-        int counter = 0;
-        for (Comment comment : comments) {
-            if (comment.isApprovedComment()) {
-                ++counter;
-            }
-        }
-        return counter;
-    }
 
     public User getAuthor() {
         return author;

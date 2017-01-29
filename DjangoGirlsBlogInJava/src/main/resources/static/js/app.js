@@ -1,22 +1,27 @@
 var myApp = angular.module('BlogApp', ['ngRoute','ngResource']);
 
-myApp.config(function($routeProvider, $locationProvider){
+myApp.config(function($routeProvider, $locationProvider, $httpProvider){
     $routeProvider
+        .when('/accounts/login', {
+            templateUrl: '/views/registration/login.html',
+            controller: 'navigation'
+        })
         .when('/posts', {
             templateUrl: '/views/blog/post_list.html',
             controller: 'postsController'
+            // reloadOnSearch: true
         })
         .when('/drafts', {
             templateUrl: '/views/blog/post_draft_list.html',
             controller: 'draftsController'
         })
+        .when('/post/new', {
+            templateUrl: '/views/blog/post_edit.html',
+            controller: 'postController'
+        })
         .when('/post/:postId', {
             templateUrl: '/views/blog/post_detail.html',
             controller: 'postController'
-        })
-        .when('/post/new', {
-            templateUrl: '/views/blog/post_edit.html',
-            controller: 'postsController'
         })
         .when('/post/:postId/edit', {
             templateUrl: '/views/blog/post_edit.html',
@@ -27,11 +32,13 @@ myApp.config(function($routeProvider, $locationProvider){
             controller: 'postController'
         })
         .otherwise(
-            { redirectTo: '/'}
+            { redirectTo: '/posts'}
         );
 
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
+
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 });

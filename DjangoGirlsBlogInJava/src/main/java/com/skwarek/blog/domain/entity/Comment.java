@@ -2,7 +2,6 @@ package com.skwarek.blog.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,10 +16,8 @@ public class Comment extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -7098117967486832113L;
 
-    @NotEmpty(message = "{notEmpty}")
     private String author;
 
-    @NotEmpty(message = "{notEmpty}")
     @Type(type = "text")
     private String text;
 

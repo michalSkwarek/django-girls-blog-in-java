@@ -1,7 +1,7 @@
 -- ----------------------------------------------
 -- add few users
-INSERT INTO user (id, username, password, enabled, role) VALUES (1, 'user1', 'pass1', TRUE, 'ROLE_ADMIN');
-INSERT INTO user (id, username, password, enabled, role) VALUES (2, 'user2', 'pass2', TRUE, 'ROLE_ADMIN');
+INSERT INTO user (id, username, password, enabled, role) VALUES (1, 'user1', 'pass1', TRUE, 'ADMIN');
+INSERT INTO user (id, username, password, enabled, role) VALUES (2, 'user2', 'pass2', TRUE, 'ADMIN');
 
 -- add few posts
 INSERT INTO post (id, author_id, title, text, created_date, published_date) VALUES (1, 1, 'title1', 'text1', TIMESTAMP '2000-01-11 11:22:33', TIMESTAMP '2000-01-12 22:33:44');

@@ -1,8 +1,8 @@
 package com.skwarek.blog;
 
-import com.skwarek.blog.data.entity.Comment;
-import com.skwarek.blog.data.entity.Post;
-import com.skwarek.blog.data.entity.User;
+import com.skwarek.blog.domain.entity.Comment;
+import com.skwarek.blog.domain.entity.Post;
+import com.skwarek.blog.domain.entity.User;
 
 import java.util.*;
 
@@ -31,14 +31,14 @@ public class MyEmbeddedDatabase {
         this.user_no_1.setUsername("user1");
         this.user_no_1.setPassword("pass1");
         this.user_no_1.setEnabled(true);
-        this.user_no_1.setRole("ROLE_ADMIN");
+        this.user_no_1.setRole("ADMIN");
 
         this.user_no_2 = new User();
         this.user_no_2.setId(2L);
         this.user_no_2.setUsername("user2");
         this.user_no_2.setPassword("pass2");
         this.user_no_2.setEnabled(true);
-        this.user_no_2.setRole("ROLE_ADMIN");
+        this.user_no_2.setRole("ADMIN");
 
         this.post_no_1 = new Post();
         this.post_no_1.setId(1L);

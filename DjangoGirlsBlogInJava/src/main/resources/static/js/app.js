@@ -15,16 +15,16 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider){
             templateUrl: '/views/blog/post_draft_list.html',
             controller: 'draftsController'
         })
-        .when('/post/new', {
+        .when('/new', {
             templateUrl: '/views/blog/post_edit.html',
-            controller: 'postsController'
-        })
-        .when('/post/:postId', {
-            templateUrl: '/views/blog/post_detail.html',
-            controller: 'postController'
+            controller: 'newPostController'
         })
         .when('/post/:postId/edit', {
             templateUrl: '/views/blog/post_edit.html',
+            controller: 'postController'
+        })
+        .when('/post/:postId', {
+            templateUrl: '/views/blog/post_detail.html',
             controller: 'postController'
         })
         .when('/post/:postId/comment', {

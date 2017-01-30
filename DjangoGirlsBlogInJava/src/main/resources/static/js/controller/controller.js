@@ -48,7 +48,7 @@ myApp.controller('navigation', function ($rootScope, $scope, $http, $location) {
     }
 });
 
-myApp.controller('publishedPostsController', function ($scope, $http, $route) {
+myApp.controller('publishedPostsController', function ($scope, $http) {
 
     $scope.showPublishedPosts = function () {
         $http.get('/posts').then(function (response) {
@@ -70,44 +70,34 @@ myApp.controller('draftsController', function ($scope, $http) {
     $scope.showDrafts();
 });
 
+myApp.controller('newPostController', function ($scope, $http, $location) {
+
+    $scope.submitPostForm = function (post) {
+        if ($scope.postForm.$valid) {
+            $http.post('/new', post).then(function () {
+                $location.path('/drafts');
+            })
+        }
+    }
+});
+
 myApp.controller('postController', function ($scope, $http, $routeParams, $location) {
-    
+
     var postId = $routeParams.postId;
+
+    $scope.submitPostForm = function (post) {
+        if ($scope.postForm.$valid) {
+            $http.put('/post/' + post.id + '/edit', post).then(function () {
+                $location.path('/posts');
+            });
+        }
+    };
 
     $scope.showPost = function () {
         $http.get('/post/' + postId).then(function (response) {
             $scope.post = response.data;
         });
     };
-
-    $scope.submitPostForm = function (post) {
-        if ($scope.postForm.$valid) {
-            if (typeof post.id === 'undefined') {
-                $http.post('/post/new', post);
-            } else {
-                $http.put('/post/' + post.id + '/edit', post);
-            }
-            // $route.reload();
-            // $window.location.href = "/posts";
-            $location.path('/posts');
-            // $scope.showPublishedPosts();
-        }
-        // location.reload();
-
-        // $scope.initFirst()
-    };
-
-    // $scope.addNewPost = function (post) {
-    //     $http.post('/post/new', post).then(function () {
-    //         $location.path('/posts');
-    //     });
-    // };
-    //
-    // $scope.editPost = function (post) {
-    //     $http.put('/post/' + post.id + '/edit', post).then(function () {
-    //         $location.path('/posts');
-    //     });
-    // };
 
     $scope.publishPost = function () {
         $http.put('/post/' + postId + '/publish', {})

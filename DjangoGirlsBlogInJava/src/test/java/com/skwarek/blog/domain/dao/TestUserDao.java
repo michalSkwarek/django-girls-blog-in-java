@@ -1,14 +1,16 @@
-package com.skwarek.blog.data.dao;
+package com.skwarek.blog.domain.dao;
 
-import com.skwarek.blog.configuration.ForTestsApplicationContextConfiguration;
-import com.skwarek.blog.data.entity.Post;
-import com.skwarek.blog.data.entity.User;
+import com.skwarek.blog.BlogSpringBootApplication;
+import com.skwarek.blog.domain.entity.Post;
+import com.skwarek.blog.domain.entity.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -23,7 +25,9 @@ import static org.junit.Assert.assertNotNull;
  * Created by Michal on 05/01/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ForTestsApplicationContextConfiguration.class})
+@SpringApplicationConfiguration(classes = BlogSpringBootApplication.class)
+@TestPropertySource(locations="classpath:application-test.properties")
+@WebAppConfiguration
 @Transactional
 public class TestUserDao {
 
@@ -59,12 +63,12 @@ public class TestUserDao {
         assertEquals("user1", found.getUsername());
         assertEquals("pass1", found.getPassword());
         assertEquals(true, found.getEnabled());
-        assertEquals("ROLE_ADMIN", found.getRole());
+        assertEquals("ADMIN", found.getRole());
         assertEquals(Arrays.asList(firstPublishedPost, draftPost), found.getPosts());
     }
 
     @Test
-    public void testAll() throws Exception {
+    public void testFindAll() throws Exception {
         List<User> found = userDao.findAll();
 
         assertEquals(2, found.size());
@@ -73,14 +77,14 @@ public class TestUserDao {
         assertEquals("user1", found.get(0).getUsername());
         assertEquals("pass1", found.get(0).getPassword());
         assertEquals(true, found.get(0).getEnabled());
-        assertEquals("ROLE_ADMIN", found.get(0).getRole());
+        assertEquals("ADMIN", found.get(0).getRole());
         assertEquals(Arrays.asList(firstPublishedPost, draftPost), found.get(0).getPosts());
 
         assertEquals(2, found.get(1).getId());
         assertEquals("user2", found.get(1).getUsername());
         assertEquals("pass2", found.get(1).getPassword());
         assertEquals(true, found.get(1).getEnabled());
-        assertEquals("ROLE_ADMIN", found.get(1).getRole());
+        assertEquals("ADMIN", found.get(1).getRole());
         assertEquals(Collections.singletonList(secondPublishedPost), found.get(1).getPosts());
     }
 
@@ -97,7 +101,7 @@ public class TestUserDao {
         assertEquals("user1", found.getUsername());
         assertEquals("pass1", found.getPassword());
         assertEquals(true, found.getEnabled());
-        assertEquals("ROLE_ADMIN", found.getRole());
+        assertEquals("ADMIN", found.getRole());
         assertEquals(Arrays.asList(firstPublishedPost, draftPost), found.getPosts());
     }
 }

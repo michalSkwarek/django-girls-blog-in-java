@@ -1,15 +1,17 @@
-package com.skwarek.blog.data.dao;
+package com.skwarek.blog.domain.dao;
 
-import com.skwarek.blog.configuration.ForTestsApplicationContextConfiguration;
-import com.skwarek.blog.data.entity.Comment;
-import com.skwarek.blog.data.entity.Post;
-import com.skwarek.blog.data.entity.User;
+import com.skwarek.blog.BlogSpringBootApplication;
+import com.skwarek.blog.domain.entity.Comment;
+import com.skwarek.blog.domain.entity.Post;
+import com.skwarek.blog.domain.entity.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -21,7 +23,9 @@ import static org.junit.Assert.assertNotNull;
  * Created by Michal on 02/01/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ForTestsApplicationContextConfiguration.class)
+@SpringApplicationConfiguration(classes = BlogSpringBootApplication.class)
+@TestPropertySource(locations="classpath:application-test.properties")
+@WebAppConfiguration
 @Transactional
 public class TestPostDao {
 
@@ -95,6 +99,10 @@ public class TestPostDao {
         assertEquals(CREATED_DATE, found.getCreatedDate());
         assertEquals(null, found.getPublishedDate());
         assertEquals(Collections.emptyList(), found.getComments());
+
+        assertEquals(4, postDao.findAll().size());
+        assertEquals(2, userDao.findAll().size());
+        assertEquals(2, commentDao.findAll().size());
     }
 
     @Test

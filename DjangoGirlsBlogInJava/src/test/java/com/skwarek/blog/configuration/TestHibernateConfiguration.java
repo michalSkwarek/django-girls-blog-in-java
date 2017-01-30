@@ -1,21 +1,25 @@
 package com.skwarek.blog.configuration;
 
-import org.hibernate.SessionFactory;
+import com.skwarek.blog.BlogSpringBootApplication;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import static junit.framework.Assert.assertNotNull;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-@ContextConfiguration(classes = HibernateConfiguration.class)
+import static junit.framework.TestCase.assertNotNull;
+
+@WebAppConfiguration
+@SpringApplicationConfiguration(classes = BlogSpringBootApplication.class)
 public class TestHibernateConfiguration extends AbstractJUnit4SpringContextTests {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Test
     public void testHibernateConfiguration() {
-        assertNotNull (sessionFactory);
+        assertNotNull (entityManager);
     }
 }

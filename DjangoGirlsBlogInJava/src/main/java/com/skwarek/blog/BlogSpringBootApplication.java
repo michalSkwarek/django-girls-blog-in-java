@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -46,16 +47,18 @@ public class BlogSpringBootApplication {
                     .httpBasic()
                     .and()
                     .authorizeRequests()
-                    .antMatchers("/views/index.html",
+                    .antMatchers("/**",
+                            "/views/index.html",
                             "/views/blog/post_list.html",
-                            "/views/registration/login.html",
-                            "/",
-                            "/posts",
-                            "/accounts/login",
-                            "/logout",
-                            "/drafts"
+                            "/views/blog/post_draft_list.html",
+                            "/views/blog/post_detail.html",
+                            "/views/blog/post_edit.html",
+                            "/views/blog/add_comment_to_post.html",
+                            "/views/registration/login.html"
                     ).permitAll()
                     .anyRequest().authenticated()
+                    .and()
+                    .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/posts")
                     .and()
                     .csrf()
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());

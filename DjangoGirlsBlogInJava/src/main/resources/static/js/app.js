@@ -8,7 +8,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider){
         })
         .when('/posts', {
             templateUrl: '/views/blog/post_list.html',
-            controller: 'postsController'
+            controller: 'publishedPostsController'
             // reloadOnSearch: true
         })
         .when('/drafts', {
@@ -17,7 +17,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider){
         })
         .when('/post/new', {
             templateUrl: '/views/blog/post_edit.html',
-            controller: 'postController'
+            controller: 'postsController'
         })
         .when('/post/:postId', {
             templateUrl: '/views/blog/post_detail.html',

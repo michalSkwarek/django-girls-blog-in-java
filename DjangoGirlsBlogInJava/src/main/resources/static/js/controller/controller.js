@@ -1,97 +1,3 @@
-myApp.controller('postsController', function ($scope, $http, $location) {
-
-    $scope.showPosts = function () {
-        $http.get('/posts').then(function (response) {
-            $scope.posts = response.data;
-        });
-    };
-
-    $scope.showPosts();
-});
-
-myApp.controller('draftsController', function ($scope, $http) {
-
-    $scope.showDrafts = function () {
-        $http.get('/drafts').then(function (response) {
-            $scope.drafts = response.data;
-        });
-    };
-
-    $scope.showDrafts();
-});
-
-myApp.controller('postController', function ($scope, $http, $routeParams, $location) {
-    var postId = $routeParams.postId;
-
-    $scope.submitCommentForm = function (comment) {
-        if ($scope.commentForm.$valid) {
-            $http.post('/post/' + postId + '/comment', comment).then(function () {
-                $location.path('/post/' + postId);
-            });
-        }
-    };
-
-    $scope.submitPostForm = function (post) {
-        if ($scope.postForm.$valid) {
-            if (typeof post.id === 'undefined') {
-                $http.post('/post/new', post);
-            } else {
-                $http.put('/post/' + post.id + '/edit', post);
-            }
-            $location.path('/posts');
-        }
-        $scope.initFirst()
-    };
-
-    // $scope.addNewPost = function (post) {
-    //     $http.post('/post/new', post).then(function () {
-    //         $location.path('/posts');
-    //     });
-    // };
-    //
-    // $scope.editPost = function (post) {
-    //     $http.put('/post/' + post.id + '/edit', post).then(function () {
-    //         $location.path('/posts');
-    //     });
-    // };
-
-    $scope.showPost = function () {
-        $http.get('/post/' + postId).then(function (response) {
-            $scope.post = response.data;
-        });
-    };
-
-    $scope.publishPost = function () {
-        $http.put('/post/' + postId + '/publish')
-            .then(function () {
-                $scope.showPost();
-            })
-    };
-
-    $scope.removePost = function (postId) {
-        $http.delete('/post/' + postId + '/remove')
-            .then(function () {
-                $location.path('/posts');
-            });
-    };
-
-    $scope.approveComment = function (commentId) {
-        $http.put('/comment/' + commentId + '/approve')
-            .then(function () {
-                $scope.showPost();
-            })
-    };
-
-    $scope.removeComment = function (commentId) {
-        $http.delete('/comment/' + commentId + '/remove')
-            .then(function () {
-                $scope.showPost();
-            });
-    };
-
-    $scope.showPost();
-});
-
 myApp.controller('navigation', function ($rootScope, $scope, $http, $location) {
 
     var authenticate = function (credentials, callback) {
@@ -134,12 +40,110 @@ myApp.controller('navigation', function ($rootScope, $scope, $http, $location) {
 
     $scope.logout = function () {
         $http.post('/logout', {}).then(function () {
-            console.log("dupa jasio");
             $rootScope.authenticated = false;
             $location.path("/posts");
         }).catch(function () {
-            console.log("error jasio");
             $rootScope.authenticated = false;
         });
     }
+});
+
+myApp.controller('publishedPostsController', function ($scope, $http, $route) {
+
+    $scope.showPublishedPosts = function () {
+        $http.get('/posts').then(function (response) {
+            $scope.posts = response.data;
+        });
+    };
+
+    $scope.showPublishedPosts();
+});
+
+myApp.controller('draftsController', function ($scope, $http) {
+
+    $scope.showDrafts = function () {
+        $http.get('/drafts').then(function (response) {
+            $scope.drafts = response.data;
+        });
+    };
+
+    $scope.showDrafts();
+});
+
+myApp.controller('postController', function ($scope, $http, $routeParams, $location) {
+    
+    var postId = $routeParams.postId;
+
+    $scope.showPost = function () {
+        $http.get('/post/' + postId).then(function (response) {
+            $scope.post = response.data;
+        });
+    };
+
+    $scope.submitPostForm = function (post) {
+        if ($scope.postForm.$valid) {
+            if (typeof post.id === 'undefined') {
+                $http.post('/post/new', post);
+            } else {
+                $http.put('/post/' + post.id + '/edit', post);
+            }
+            // $route.reload();
+            // $window.location.href = "/posts";
+            $location.path('/posts');
+            // $scope.showPublishedPosts();
+        }
+        // location.reload();
+
+        // $scope.initFirst()
+    };
+
+    // $scope.addNewPost = function (post) {
+    //     $http.post('/post/new', post).then(function () {
+    //         $location.path('/posts');
+    //     });
+    // };
+    //
+    // $scope.editPost = function (post) {
+    //     $http.put('/post/' + post.id + '/edit', post).then(function () {
+    //         $location.path('/posts');
+    //     });
+    // };
+
+    $scope.publishPost = function () {
+        $http.put('/post/' + postId + '/publish', {})
+            .then(function () {
+                $scope.showPost();
+            })
+    };
+
+    $scope.removePost = function (postId) {
+        $http.delete('/post/' + postId + '/remove')
+            .then(function () {
+                $location.path('/posts');
+            });
+    };
+
+    $scope.approveComment = function (commentId) {
+        $http.put('/comment/' + commentId + '/approve', {})
+            .then(function () {
+                $scope.showPost();
+            })
+    };
+
+    $scope.removeComment = function (commentId) {
+        $http.delete('/comment/' + commentId + '/remove')
+            .then(function () {
+                $scope.showPost();
+            });
+    };
+
+    $scope.submitCommentForm = function (comment) {
+        if ($scope.commentForm.$valid) {
+            $http.post('/post/' + postId + '/comment', comment).then(function () {
+                $location.path('/post/' + postId);
+            });
+        }
+    };
+
+    $scope.showPost();
 });

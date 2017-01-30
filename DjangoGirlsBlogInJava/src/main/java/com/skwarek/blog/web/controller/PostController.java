@@ -46,7 +46,7 @@ public class PostController {
         postService.updatePost(post);
     }
 
-    @RequestMapping(value = "post/{postId}/publish", method = RequestMethod.PUT)
+    @RequestMapping(value = "/post/{postId}/publish", method = RequestMethod.PUT)
     public void publishPost(@PathVariable long postId) {
         postService.publishPost(postId);
     }

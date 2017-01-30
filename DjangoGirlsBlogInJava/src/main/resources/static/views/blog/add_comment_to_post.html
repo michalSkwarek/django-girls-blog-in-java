@@ -1,10 +1,10 @@
 <h1>New comment</h1>
-<form name="commentForm" class="post-form">
+<form name="commentForm" class="post-form" ng-submit="submitCommentForm(comment)">
     <p>Author:</p>
     <input type="text" ng-model="comment.author" required/>
 
     <p>Text:</p>
     <textarea rows="10" ng-model="comment.text" required></textarea>
 
-    <button type="submit" class="save btn btn-default" ng-click="submitCommentForm(comment)">Send</button>
+    <button type="submit" class="save btn btn-default">Send</button>
 </form>

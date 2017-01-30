@@ -1,23 +1,26 @@
 package com.skwarek.blog.service;
 
+import com.skwarek.blog.BlogSpringBootApplication;
 import com.skwarek.blog.MyEmbeddedDatabase;
-import com.skwarek.blog.configuration.ApplicationContextConfiguration;
-import com.skwarek.blog.data.dao.CommentDao;
-import com.skwarek.blog.data.dao.PostDao;
-import com.skwarek.blog.data.dao.UserDao;
-import com.skwarek.blog.data.entity.Comment;
-import com.skwarek.blog.data.entity.Post;
-import com.skwarek.blog.data.entity.User;
+import com.skwarek.blog.domain.dao.CommentDao;
+import com.skwarek.blog.domain.dao.PostDao;
+import com.skwarek.blog.domain.dao.UserDao;
+import com.skwarek.blog.domain.entity.Comment;
+import com.skwarek.blog.domain.entity.Post;
+import com.skwarek.blog.domain.entity.User;
 import com.skwarek.blog.service.impl.PostServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.ContextConfiguration;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -27,10 +30,12 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Michal on 02/01/2017.
  */
-@ContextConfiguration(classes = ApplicationContextConfiguration.class)
+@SpringApplicationConfiguration(classes = BlogSpringBootApplication.class)
 public class TestPostService {
 
     private final static long FIRST_PUBLISHED_POST_ID = 1;
+
+    private final static long DRAFT_POST_ID = 3;
 
     private final static Date CREATED_DATE = MyEmbeddedDatabase.getCreatedDate();
     private final static Date PUBLISHED_DATE = MyEmbeddedDatabase.getPublishedDate();
@@ -98,7 +103,6 @@ public class TestPostService {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testFindAllPublishedPosts() throws Exception {
         given(this.postDao.findAllPublishedPosts()).willReturn(Arrays.asList(firstPublishedPost, secondPublishedPost));
 
@@ -127,7 +131,6 @@ public class TestPostService {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testFindAllDrafts() throws Exception {
         given(this.postDao.findAllDrafts()).willReturn(Collections.singletonList(draftPost));
 
@@ -182,10 +185,13 @@ public class TestPostService {
 
     @Test
     public void testPublishPost() throws Exception {
-        postService.publishPost(draftPost);
+        given(postDao.read(DRAFT_POST_ID)).willReturn(draftPost);
+
+        postService.publishPost(DRAFT_POST_ID);
 
         assertNotNull(draftPost.getPublishedDate());
 
+        verify(postDao, times(1)).read(DRAFT_POST_ID);
         verify(postDao, times(1)).update(draftPost);
         verifyNoMoreInteractions(postDao);
     }

@@ -1,14 +1,14 @@
 package com.skwarek.blog.service;
 
+import com.skwarek.blog.BlogSpringBootApplication;
 import com.skwarek.blog.MyEmbeddedDatabase;
-import com.skwarek.blog.configuration.ApplicationContextConfiguration;
-import com.skwarek.blog.data.dao.CommentDao;
-import com.skwarek.blog.data.entity.Comment;
+import com.skwarek.blog.domain.dao.CommentDao;
+import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.service.impl.CommentServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
@@ -17,10 +17,11 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Michal on 05/01/2017.
  */
-@ContextConfiguration(classes = ApplicationContextConfiguration.class)
+@SpringApplicationConfiguration(classes = BlogSpringBootApplication.class)
 public class TestCommentService {
 
     private final static long APPROVED_COMMENT_ID = 1;
+    private final static long NOT_APPROVED_COMMENT_ID = 2;
 
     private Comment approvedComment;
     private Comment notApprovedComment;
@@ -44,10 +45,13 @@ public class TestCommentService {
 
     @Test
     public void testApproveComment() throws Exception {
-        commentService.approve(notApprovedComment);
+        given(commentDao.read(NOT_APPROVED_COMMENT_ID)).willReturn(notApprovedComment);
+
+        commentService.approve(NOT_APPROVED_COMMENT_ID);
 
         assertEquals(true, notApprovedComment.isApprovedComment());
 
+        verify(commentDao, times(1)).read(NOT_APPROVED_COMMENT_ID);
         verify(commentDao, times(1)).update(notApprovedComment);
         verifyNoMoreInteractions(commentDao);
     }

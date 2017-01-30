@@ -1,18 +1,18 @@
-package com.skwarek.blog.data.entity;
+package com.skwarek.blog.domain.entity;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.apache.commons.lang.SerializationUtils;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
-
-import java.io.Serializable;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.SerializationUtils;
 
 import static junit.framework.TestCase.assertEquals;
 
 /**
  * Created by Michal on 07/01/2017.
  */
+@SpringBootTest
 public abstract class AbstractJavaBeanTest<T> {
 
     protected abstract T getBeanInstance();
@@ -21,7 +21,7 @@ public abstract class AbstractJavaBeanTest<T> {
     @SuppressWarnings("unchecked")
     public void beanIsSerializable() throws Exception {
         final T myBean = getBeanInstance();
-        final byte[] serializedMyBean = SerializationUtils.serialize((Serializable) myBean);
+        final byte[] serializedMyBean = SerializationUtils.serialize(myBean);
         final T deserializedMyBean = (T) SerializationUtils.deserialize(serializedMyBean);
         assertEquals(myBean, deserializedMyBean);
     }

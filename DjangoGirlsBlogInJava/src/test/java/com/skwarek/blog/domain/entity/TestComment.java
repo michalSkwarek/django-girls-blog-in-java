@@ -1,4 +1,4 @@
-package com.skwarek.blog.data.entity;
+package com.skwarek.blog.domain.entity;
 
 import com.skwarek.blog.MyEmbeddedDatabase;
 import org.junit.Before;

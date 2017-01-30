@@ -36,7 +36,7 @@ public class PostController {
         return postService.read(postId);
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/post/new", method = RequestMethod.POST)
     public void processCreatePostForm(@RequestBody Post post) {
         postService.createPost(post);
     }

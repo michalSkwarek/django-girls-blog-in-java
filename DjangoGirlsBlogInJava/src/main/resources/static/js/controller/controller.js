@@ -74,7 +74,7 @@ myApp.controller('newPostController', function ($scope, $http, $location) {
 
     $scope.submitPostForm = function (post) {
         if ($scope.postForm.$valid) {
-            $http.post('/new', post).then(function () {
+            $http.post('/post/new', post).then(function () {
                 $location.path('/drafts');
             })
         }

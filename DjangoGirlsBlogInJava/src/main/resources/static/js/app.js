@@ -15,7 +15,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider){
             templateUrl: '/views/blog/post_draft_list.html',
             controller: 'draftsController'
         })
-        .when('/new', {
+        .when('/post/new', {
             templateUrl: '/views/blog/post_edit.html',
             controller: 'newPostController'
         })

@@ -81,6 +81,20 @@ public class TestPostDao {
     }
 
     @Test
+    public void testReadPost() throws Exception {
+        Post found = postDao.findOne(FIRST_PUBLISHED_POST_ID);
+
+        assertNotNull(found);
+        assertEquals(FIRST_PUBLISHED_POST_ID, found.getId());
+        assertEquals(firstAuthor, found.getAuthor());
+        assertEquals("title1", found.getTitle());
+        assertEquals("text1", found.getText());
+        assertEquals(CREATED_DATE, found.getCreatedDate());
+        assertEquals(PUBLISHED_DATE, found.getPublishedDate());
+        assertEquals(Arrays.asList(approvedComment, notApprovedComment), found.getComments());
+    }
+
+    @Test
     public void testCreatePost() throws Exception {
         assertEquals(3, postDao.count());
         assertEquals(2, userDao.count());
@@ -103,20 +117,6 @@ public class TestPostDao {
         assertEquals(4, postDao.count());
         assertEquals(2, userDao.count());
         assertEquals(2, commentDao.count());
-    }
-
-    @Test
-    public void testReadPost() throws Exception {
-        Post found = postDao.findOne(FIRST_PUBLISHED_POST_ID);
-
-        assertNotNull(found);
-        assertEquals(FIRST_PUBLISHED_POST_ID, found.getId());
-        assertEquals(firstAuthor, found.getAuthor());
-        assertEquals("title1", found.getTitle());
-        assertEquals("text1", found.getText());
-        assertEquals(CREATED_DATE, found.getCreatedDate());
-        assertEquals(PUBLISHED_DATE, found.getPublishedDate());
-        assertEquals(Arrays.asList(approvedComment, notApprovedComment), found.getComments());
     }
 
     @Test

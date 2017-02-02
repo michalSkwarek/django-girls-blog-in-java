@@ -4,7 +4,6 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.SerializationUtils;
 
 import static junit.framework.TestCase.assertEquals;
@@ -12,7 +11,6 @@ import static junit.framework.TestCase.assertEquals;
 /**
  * Created by Michal on 07/01/2017.
  */
-@SpringBootTest
 public abstract class AbstractJavaBeanTest<T> {
 
     protected abstract T getBeanInstance();
@@ -28,7 +26,10 @@ public abstract class AbstractJavaBeanTest<T> {
 
     @Test
     public void equalsAndHashCodeContract() throws Exception {
-        EqualsVerifier.forClass(getBeanInstance().getClass()).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(getBeanInstance().getClass())
+                .withRedefinedSuperclass()
+                .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
+                .verify();
     }
 
     @Test

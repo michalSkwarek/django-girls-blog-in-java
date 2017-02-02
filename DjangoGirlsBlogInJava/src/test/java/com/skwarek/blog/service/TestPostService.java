@@ -103,6 +103,24 @@ public class TestPostService {
     }
 
     @Test
+    public void testReadPost() throws Exception {
+        given(this.postDao.findOne(FIRST_PUBLISHED_POST_ID)).willReturn((firstPublishedPost));
+
+        Post found = postService.readPost(FIRST_PUBLISHED_POST_ID);
+
+        assertEquals(1, found.getId());
+        assertEquals(firstAuthor, found.getAuthor());
+        assertEquals("title1", found.getTitle());
+        assertEquals("text1", found.getText());
+        assertEquals(CREATED_DATE, found.getCreatedDate());
+        assertEquals(PUBLISHED_DATE, found.getPublishedDate());
+        assertEquals(Arrays.asList(approvedComment, notApprovedComment), found.getComments());
+
+        verify(postDao, times(1)).findOne(FIRST_PUBLISHED_POST_ID);
+        verifyNoMoreInteractions(postDao);
+    }
+
+    @Test
     public void testFindAllPublishedPosts() throws Exception {
         given(this.postDao.findAllPublishedPosts()).willReturn(Arrays.asList(firstPublishedPost, secondPublishedPost));
 

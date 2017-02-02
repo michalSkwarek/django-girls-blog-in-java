@@ -30,6 +30,12 @@
             <version>1.4.2.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.12</version>
+        </dependency>
+
         <!--security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

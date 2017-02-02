@@ -37,13 +37,15 @@ public class PostController {
     }
 
     @RequestMapping(value = "/post/new", method = RequestMethod.POST)
-    public void processCreatePostForm(@RequestBody Post post) {
+    public Post processCreatePostForm(@RequestBody Post post) {
         postService.createPost(post);
+        return post;
     }
 
     @RequestMapping(value = "/post/{postId}/edit", method = RequestMethod.PUT)
-    public void processEditPostForm(@RequestBody Post post, @PathVariable long postId) {
+    public Post processEditPostForm(@RequestBody Post post, @PathVariable long postId) {
         postService.updatePost(post);
+        return post;
     }
 
     @RequestMapping(value = "/post/{postId}/publish", method = RequestMethod.PUT)
@@ -57,7 +59,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/post/{postId}/comment", method = RequestMethod.POST)
-    public void processCreateCommentForm(@RequestBody Comment comment, @PathVariable long postId) {
+    public Comment processCreateCommentForm(@RequestBody Comment comment, @PathVariable long postId) {
         postService.addCommentToPost(comment, postId);
+        return comment;
     }
 }

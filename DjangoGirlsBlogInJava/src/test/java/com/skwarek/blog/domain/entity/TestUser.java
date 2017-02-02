@@ -27,6 +27,6 @@ public class TestUser extends AbstractJavaBeanTest<User> {
 
     @Test
     public void toStringCorrectness() throws Exception {
-        assertEquals("user1", user.toString());
+        assertEquals("User(username=user1)", user.toString());
     }
 }

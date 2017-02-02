@@ -8,6 +8,8 @@ import com.skwarek.blog.domain.entity.Post;
 import com.skwarek.blog.service.PostService;
 import com.skwarek.blog.service.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,9 +51,8 @@ public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements P
 
     @Override
     public void createPost(Post post) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        post.setAuthor(userDao.findUserByUsername(auth.getName()));
-        post.setAuthor(null);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        post.setAuthor(userDao.findUserByUsername(auth.getName()));
         post.setCreatedDate(new Date());
         postDao.create(post);
     }

@@ -27,6 +27,6 @@ public class TestPost extends AbstractJavaBeanTest<Post> {
 
     @Test
     public void toStringCorrectness() throws Exception {
-        assertEquals("title1", post.toString());
+        assertEquals("Post(title=title1)", post.toString());
     }
 }

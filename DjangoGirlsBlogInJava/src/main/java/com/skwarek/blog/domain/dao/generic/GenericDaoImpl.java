@@ -19,7 +19,7 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> implements Gene
     private Class<E> daoType;
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     public GenericDaoImpl() {

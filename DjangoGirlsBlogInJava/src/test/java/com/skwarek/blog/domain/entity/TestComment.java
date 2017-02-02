@@ -27,6 +27,6 @@ public class TestComment extends AbstractJavaBeanTest<Comment> {
 
     @Test
     public void toStringCorrectness() throws Exception {
-        assertEquals("commentText1", comment.toString());
+        assertEquals("Comment(text=commentText1)", comment.toString());
     }
 }

@@ -9,7 +9,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider){
         .when('/posts', {
             templateUrl: '/views/blog/post_list.html',
             controller: 'publishedPostsController'
-            // reloadOnSearch: true
         })
         .when('/drafts', {
             templateUrl: '/views/blog/post_draft_list.html',

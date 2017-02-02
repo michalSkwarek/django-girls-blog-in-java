@@ -48,25 +48,25 @@ public class TestCommentDao {
 
     @Before
     public void setUp() {
-        this.firstPublishedPost = postDao.read(FIRST_PUBLISHED_POST_ID);
+        this.firstPublishedPost = postDao.findOne(FIRST_PUBLISHED_POST_ID);
 
         this.newComment = new Comment();
         this.newComment.setAuthor("newAuthor");
         this.newComment.setText("newText");
         this.newComment.setCreatedDate(CREATED_DATE);
         this.newComment.setApprovedComment(false);
-        this.newComment.setPost(postDao.read(FIRST_PUBLISHED_POST_ID));
+        this.newComment.setPost(postDao.findOne(FIRST_PUBLISHED_POST_ID));
     }
 
     @Test
     public void testCreateComment() throws Exception {
-        assertEquals(2, commentDao.findAll().size());
-        assertEquals(3, postDao.findAll().size());
+        assertEquals(2, commentDao.count());
+        assertEquals(3, postDao.count());
 
-        commentDao.create(newComment);
+        commentDao.save(newComment);
 
         long newCommentId = 3;
-        Comment found = commentDao.read(newCommentId);
+        Comment found = commentDao.findOne(newCommentId);
 
         assertNotNull(found);
         assertEquals(newCommentId, found.getId());
@@ -76,13 +76,13 @@ public class TestCommentDao {
         assertEquals(false, found.isApprovedComment());
         assertEquals(firstPublishedPost, found.getPost());
 
-        assertEquals(3, commentDao.findAll().size());
-        assertEquals(3, postDao.findAll().size());
+        assertEquals(3, commentDao.count());
+        assertEquals(3, postDao.count());
     }
 
     @Test
     public void testReadComment() throws Exception {
-        Comment found = commentDao.read(APPROVED_COMMENT_ID);
+        Comment found = commentDao.findOne(APPROVED_COMMENT_ID);
 
         assertNotNull(found);
         assertEquals(APPROVED_COMMENT_ID, found.getId());
@@ -95,14 +95,14 @@ public class TestCommentDao {
 
     @Test
     public void testUpdateComment() throws Exception {
-        assertEquals(2, commentDao.findAll().size());
-        assertEquals(3, postDao.findAll().size());
+        assertEquals(2, commentDao.count());
+        assertEquals(3, postDao.count());
 
-        Comment toUpdate = commentDao.read(APPROVED_COMMENT_ID);
+        Comment toUpdate = commentDao.findOne(APPROVED_COMMENT_ID);
         toUpdate.setText("editedText");
-        commentDao.update(toUpdate);
+        commentDao.save(toUpdate);
 
-        Comment found = commentDao.read(APPROVED_COMMENT_ID);
+        Comment found = commentDao.findOne(APPROVED_COMMENT_ID);
 
         assertNotNull(found);
         assertEquals(APPROVED_COMMENT_ID, found.getId());
@@ -112,13 +112,13 @@ public class TestCommentDao {
         assertEquals(true, found.isApprovedComment());
         assertEquals(firstPublishedPost, found.getPost());
 
-        assertEquals(2, commentDao.findAll().size());
-        assertEquals(3, postDao.findAll().size());
+        assertEquals(2, commentDao.count());
+        assertEquals(3, postDao.count());
     }
 
     @Test
     public void testFindAll() throws Exception {
-        List<Comment> found = commentDao.findAll();
+        List<Comment> found = (List<Comment>) commentDao.findAll();
 
         assertEquals(1 + 1, found.size());
 
@@ -139,13 +139,13 @@ public class TestCommentDao {
 
     @Test
     public void testRemoveComment() throws Exception {
-        assertEquals(2, commentDao.findAll().size());
-        assertEquals(3, postDao.findAll().size());
+        assertEquals(2, commentDao.count());
+        assertEquals(3, postDao.count());
 
-        commentDao.removeComment(APPROVED_COMMENT_ID);
+        commentDao.delete(APPROVED_COMMENT_ID);
 
-        assertEquals(1, commentDao.findAll().size());
-        assertEquals(3, postDao.findAll().size());
+        assertEquals(1, commentDao.count());
+        assertEquals(3, postDao.count());
     }
 }
 

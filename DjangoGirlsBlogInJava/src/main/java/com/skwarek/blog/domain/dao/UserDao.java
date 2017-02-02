@@ -1,12 +1,12 @@
 package com.skwarek.blog.domain.dao;
 
-import com.skwarek.blog.domain.dao.generic.GenericDao;
 import com.skwarek.blog.domain.entity.User;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * Created by Michal on 05/01/2017.
  */
-public interface UserDao extends GenericDao<User, Long> {
+public interface UserDao extends CrudRepository<User, Long> {
 
-    User findUserByUsername(String username);
+    User findByUsername(String username);
 }

@@ -123,7 +123,7 @@ public class TestPostController {
 
     @Test
     public void showPost_PostEntryFound_ShouldAddPostEntryToModelAndRenderPostEntryView() throws Exception {
-        given(this.postService.read(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
+        given(this.postService.readPost(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
 
         mockMvc.perform(get("/post/{postId}", FIRST_PUBLISHED_POST_ID))
                 .andExpect(status().isOk())
@@ -134,13 +134,13 @@ public class TestPostController {
                 .andExpect(jsonPath("$.createdDate", is(CREATED_DATE.getTime())))
                 .andExpect(jsonPath("$.publishedDate", is(PUBLISHED_DATE.getTime())));
 
-        verify(postService, times(1)).read(FIRST_PUBLISHED_POST_ID);
+        verify(postService, times(1)).readPost(FIRST_PUBLISHED_POST_ID);
         verifyNoMoreInteractions(postService);
     }
 
     @Test
     public void showPost_PostAndCommentsEntryFound_ShouldAddCommentsEntryToModelAndRenderCommentsEntryView() throws Exception {
-        given(this.postService.read(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
+        given(this.postService.readPost(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
 
         mockMvc.perform(get("/post/{postId}", FIRST_PUBLISHED_POST_ID))
                 .andExpect(jsonPath("$.comments", hasSize(2)))

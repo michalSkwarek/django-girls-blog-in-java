@@ -45,24 +45,24 @@ public class TestCommentService {
 
     @Test
     public void testApproveComment() throws Exception {
-        given(commentDao.read(NOT_APPROVED_COMMENT_ID)).willReturn(notApprovedComment);
+        given(commentDao.findOne(NOT_APPROVED_COMMENT_ID)).willReturn(notApprovedComment);
 
         commentService.approve(NOT_APPROVED_COMMENT_ID);
 
         assertEquals(true, notApprovedComment.isApprovedComment());
 
-        verify(commentDao, times(1)).read(NOT_APPROVED_COMMENT_ID);
-        verify(commentDao, times(1)).update(notApprovedComment);
+        verify(commentDao, times(1)).findOne(NOT_APPROVED_COMMENT_ID);
+        verify(commentDao, times(1)).save(notApprovedComment);
         verifyNoMoreInteractions(commentDao);
     }
 
     @Test
     public void testRemoveComment() throws Exception {
-        given(commentDao.removeComment(APPROVED_COMMENT_ID)).willReturn(true);
+        doNothing().when(this.commentDao).delete(APPROVED_COMMENT_ID);
 
         commentService.removeComment(APPROVED_COMMENT_ID);
 
-        verify(commentDao, times(1)).removeComment(APPROVED_COMMENT_ID);
+        verify(commentDao, times(1)).delete(APPROVED_COMMENT_ID);
         verifyNoMoreInteractions(commentDao);
     }
 }

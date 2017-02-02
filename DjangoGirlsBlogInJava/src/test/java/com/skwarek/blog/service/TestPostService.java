@@ -154,7 +154,7 @@ public class TestPostService {
     public void testCreatePost() throws Exception {
         given(securityContext.getAuthentication()).willReturn(authentication);
         given(authentication.getName()).willReturn(firstAuthor.getUsername());
-        given(this.userDao.findUserByUsername(firstAuthor.getUsername())).willReturn(firstAuthor);
+        given(this.userDao.findByUsername(firstAuthor.getUsername())).willReturn(firstAuthor);
 
         SecurityContextHolder.setContext(securityContext);
 
@@ -163,42 +163,42 @@ public class TestPostService {
         assertNotNull(newPost.getCreatedDate());
         assertEquals(firstAuthor, newPost.getAuthor());
 
-        verify(userDao, times(1)).findUserByUsername(firstAuthor.getUsername());
+        verify(userDao, times(1)).findByUsername(firstAuthor.getUsername());
         verifyNoMoreInteractions(userDao);
-        verify(postDao, times(1)).create(newPost);
+        verify(postDao, times(1)).save(newPost);
         verifyNoMoreInteractions(postDao);
     }
 
     @Test
     public void testUpdatePost() throws Exception {
-        given(this.postDao.read(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
+        given(this.postDao.findOne(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
 
         postService.updatePost(editedFirstPublishedPost);
 
         assertEquals("editedTitle", firstPublishedPost.getTitle());
         assertEquals("editedText", firstPublishedPost.getText());
 
-        verify(postDao, times(1)).read(FIRST_PUBLISHED_POST_ID);
-        verify(postDao, times(1)).update(firstPublishedPost);
+        verify(postDao, times(1)).findOne(FIRST_PUBLISHED_POST_ID);
+        verify(postDao, times(1)).save(firstPublishedPost);
         verifyNoMoreInteractions(postDao);
     }
 
     @Test
     public void testPublishPost() throws Exception {
-        given(postDao.read(DRAFT_POST_ID)).willReturn(draftPost);
+        given(postDao.findOne(DRAFT_POST_ID)).willReturn(draftPost);
 
         postService.publishPost(DRAFT_POST_ID);
 
         assertNotNull(draftPost.getPublishedDate());
 
-        verify(postDao, times(1)).read(DRAFT_POST_ID);
-        verify(postDao, times(1)).update(draftPost);
+        verify(postDao, times(1)).findOne(DRAFT_POST_ID);
+        verify(postDao, times(1)).save(draftPost);
         verifyNoMoreInteractions(postDao);
     }
 
     @Test
     public void testAddCommentToPost() throws Exception {
-        given(this.postDao.read(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
+        given(this.postDao.findOne(FIRST_PUBLISHED_POST_ID)).willReturn(firstPublishedPost);
 
         postService.addCommentToPost(newComment, FIRST_PUBLISHED_POST_ID);
 
@@ -206,19 +206,19 @@ public class TestPostService {
         assertEquals(false, newComment.isApprovedComment());
         assertEquals(firstPublishedPost, newComment.getPost());
 
-        verify(postDao, times(1)).read(FIRST_PUBLISHED_POST_ID);
+        verify(postDao, times(1)).findOne(FIRST_PUBLISHED_POST_ID);
         verifyNoMoreInteractions(postDao);
-        verify(commentDao, times(1)).create(newComment);
+        verify(commentDao, times(1)).save(newComment);
         verifyNoMoreInteractions(commentDao);
     }
 
     @Test
     public void testRemovePost() throws Exception {
-        given(this.postDao.removePost(FIRST_PUBLISHED_POST_ID)).willReturn(true);
+        doNothing().when(this.postDao).delete(FIRST_PUBLISHED_POST_ID);
 
         postService.removePost(FIRST_PUBLISHED_POST_ID);
 
-        verify(postDao, times(1)).removePost(FIRST_PUBLISHED_POST_ID);
+        verify(postDao, times(1)).delete(FIRST_PUBLISHED_POST_ID);
         verifyNoMoreInteractions(postDao);
     }
 }

@@ -45,6 +45,6 @@ public class Post extends AbstractEntity implements Serializable {
 
     @JsonManagedReference
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 }

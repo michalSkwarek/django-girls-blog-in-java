@@ -2,14 +2,15 @@ package com.skwarek.blog.service;
 
 import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.domain.entity.Post;
-import com.skwarek.blog.service.generic.GenericService;
 
 import java.util.List;
 
 /**
  * Created by Michal on 02/01/2017.
  */
-public interface PostService extends GenericService<Post, Long> {
+public interface PostService {
+
+    Post readPost(long postId);
 
     List<Post> findAllPublishedPosts();
 
@@ -23,5 +24,5 @@ public interface PostService extends GenericService<Post, Long> {
 
     void addCommentToPost(Comment comment, long postId);
 
-    boolean removePost(long postId);
+    void removePost(long postId);
 }

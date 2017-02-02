@@ -33,7 +33,7 @@ public class PostController {
 
     @RequestMapping(value = "/post/{postId}", method = RequestMethod.GET)
     public Post showPost(@PathVariable long postId) {
-        return postService.read(postId);
+        return postService.readPost(postId);
     }
 
     @RequestMapping(value = "/post/new", method = RequestMethod.POST)

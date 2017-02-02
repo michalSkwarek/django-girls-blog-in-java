@@ -32,6 +32,6 @@ public class User extends AbstractEntity implements Serializable {
 
     @JsonManagedReference
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 }

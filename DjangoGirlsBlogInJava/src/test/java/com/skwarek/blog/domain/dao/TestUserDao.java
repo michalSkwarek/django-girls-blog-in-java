@@ -49,14 +49,14 @@ public class TestUserDao {
 
     @Before
     public void setUp() {
-        this.firstPublishedPost = postDao.read(FIRST_PUBLISHED_POST_ID);
-        this.secondPublishedPost = postDao.read(SECOND_PUBLISHED_POST_ID);
-        this.draftPost = postDao.read(DRAFT_POST_ID);
+        this.firstPublishedPost = postDao.findOne(FIRST_PUBLISHED_POST_ID);
+        this.secondPublishedPost = postDao.findOne(SECOND_PUBLISHED_POST_ID);
+        this.draftPost = postDao.findOne(DRAFT_POST_ID);
     }
 
     @Test
     public void testReadUser() throws Exception {
-        User found = userDao.read(FIRST_AUTHOR_ID);
+        User found = userDao.findOne(FIRST_AUTHOR_ID);
 
         assertNotNull(found);
         assertEquals(FIRST_AUTHOR_ID, found.getId());
@@ -69,7 +69,7 @@ public class TestUserDao {
 
     @Test
     public void testFindAll() throws Exception {
-        List<User> found = userDao.findAll();
+        List<User> found = (List<User>) userDao.findAll();
 
         assertEquals(2, found.size());
 
@@ -90,11 +90,11 @@ public class TestUserDao {
 
     @Test
     public void testFindUserByUsername() {
-        User notFound = userDao.findUserByUsername("notFound");
+        User notFound = userDao.findByUsername("notFound");
 
         assertNull(notFound);
 
-        User found = userDao.findUserByUsername("user1");
+        User found = userDao.findByUsername("user1");
 
         assertNotNull(found);
         assertEquals(FIRST_AUTHOR_ID, found.getId());

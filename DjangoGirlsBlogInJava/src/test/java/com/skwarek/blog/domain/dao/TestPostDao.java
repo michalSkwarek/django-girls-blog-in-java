@@ -63,8 +63,8 @@ public class TestPostDao {
 
     @Before
     public void setUp() {
-        this.firstAuthor = userDao.read(FIRST_AUTHOR_ID);
-        this.secondAuthor = userDao.read(SECOND_AUTHOR_ID);
+        this.firstAuthor = userDao.findOne(FIRST_AUTHOR_ID);
+        this.secondAuthor = userDao.findOne(SECOND_AUTHOR_ID);
 
         this.newPost = new Post();
         this.newPost.setAuthor(firstAuthor);
@@ -76,20 +76,20 @@ public class TestPostDao {
         this.newComment.setAuthor("newAuthor");
         this.newComment.setText("newText");
 
-        this.approvedComment = commentDao.read(APPROVED_COMMENT_ID);
-        this.notApprovedComment = commentDao.read(NOT_APPROVED_COMMENT_ID);
+        this.approvedComment = commentDao.findOne(APPROVED_COMMENT_ID);
+        this.notApprovedComment = commentDao.findOne(NOT_APPROVED_COMMENT_ID);
     }
 
     @Test
     public void testCreatePost() throws Exception {
-        assertEquals(3, postDao.findAll().size());
-        assertEquals(2, userDao.findAll().size());
-        assertEquals(2, commentDao.findAll().size());
+        assertEquals(3, postDao.count());
+        assertEquals(2, userDao.count());
+        assertEquals(2, commentDao.count());
 
-        postDao.create(newPost);
+        postDao.save(newPost);
 
         long newPostId = 4;
-        Post found = postDao.read(newPostId);
+        Post found = postDao.findOne(newPostId);
 
         assertNotNull(found);
         assertEquals(newPostId, found.getId());
@@ -100,14 +100,14 @@ public class TestPostDao {
         assertEquals(null, found.getPublishedDate());
         assertEquals(Collections.emptyList(), found.getComments());
 
-        assertEquals(4, postDao.findAll().size());
-        assertEquals(2, userDao.findAll().size());
-        assertEquals(2, commentDao.findAll().size());
+        assertEquals(4, postDao.count());
+        assertEquals(2, userDao.count());
+        assertEquals(2, commentDao.count());
     }
 
     @Test
     public void testReadPost() throws Exception {
-        Post found = postDao.read(FIRST_PUBLISHED_POST_ID);
+        Post found = postDao.findOne(FIRST_PUBLISHED_POST_ID);
 
         assertNotNull(found);
         assertEquals(FIRST_PUBLISHED_POST_ID, found.getId());
@@ -121,16 +121,16 @@ public class TestPostDao {
 
     @Test
     public void testUpdatePost() throws Exception {
-        assertEquals(3, postDao.findAll().size());
-        assertEquals(2, userDao.findAll().size());
-        assertEquals(2, commentDao.findAll().size());
+        assertEquals(3, postDao.count());
+        assertEquals(2, userDao.count());
+        assertEquals(2, commentDao.count());
 
-        Post toUpdate = postDao.read(FIRST_PUBLISHED_POST_ID);
+        Post toUpdate = postDao.findOne(FIRST_PUBLISHED_POST_ID);
         toUpdate.setTitle("editedTitle");
         toUpdate.setText("editedText");
-        postDao.update(toUpdate);
+        postDao.save(toUpdate);
 
-        Post found = postDao.read(FIRST_PUBLISHED_POST_ID);
+        Post found = postDao.findOne(FIRST_PUBLISHED_POST_ID);
 
         assertNotNull(found);
         assertEquals(FIRST_PUBLISHED_POST_ID, found.getId());
@@ -141,14 +141,14 @@ public class TestPostDao {
         assertEquals(PUBLISHED_DATE, found.getPublishedDate());
         assertEquals(Arrays.asList(approvedComment, notApprovedComment), found.getComments());
 
-        assertEquals(3, postDao.findAll().size());
-        assertEquals(2, userDao.findAll().size());
-        assertEquals(2, commentDao.findAll().size());
+        assertEquals(3, postDao.count());
+        assertEquals(2, userDao.count());
+        assertEquals(2, commentDao.count());
     }
 
     @Test
     public void testFindAll() throws Exception {
-        List<Post> found = postDao.findAll();
+        List<Post> found = (List<Post>) postDao.findAll();
 
         assertEquals(2 + 1, found.size());
 
@@ -178,7 +178,6 @@ public class TestPostDao {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testFindAllPublishedPosts() throws Exception {
         List<Post> found = postDao.findAllPublishedPosts();
 
@@ -202,7 +201,6 @@ public class TestPostDao {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testFindAllDrafts() throws Exception {
         List<Post> found = postDao.findAllDrafts();
 
@@ -219,14 +217,14 @@ public class TestPostDao {
 
     @Test
     public void testRemovePost() throws Exception {
-        assertEquals(3, postDao.findAll().size());
-        assertEquals(2, userDao.findAll().size());
-        assertEquals(2, commentDao.findAll().size());
+        assertEquals(3, postDao.count());
+        assertEquals(2, userDao.count());
+        assertEquals(2, commentDao.count());
 
-        postDao.removePost(FIRST_PUBLISHED_POST_ID);
+        postDao.delete(FIRST_PUBLISHED_POST_ID);
 
-        assertEquals(2, postDao.findAll().size());
-        assertEquals(2, userDao.findAll().size());
-        assertEquals(0, commentDao.findAll().size());
+        assertEquals(2, postDao.count());
+        assertEquals(2, userDao.count());
+        assertEquals(0, commentDao.count());
     }
 }

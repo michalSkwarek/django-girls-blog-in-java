@@ -6,7 +6,6 @@ import com.skwarek.blog.domain.dao.UserDao;
 import com.skwarek.blog.domain.entity.Comment;
 import com.skwarek.blog.domain.entity.Post;
 import com.skwarek.blog.service.PostService;
-import com.skwarek.blog.service.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +21,7 @@ import java.util.List;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements PostService {
+public class PostServiceImpl implements PostService {
 
     private final PostDao postDao;
     private final CommentDao commentDao;
@@ -36,14 +35,18 @@ public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements P
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public Post readPost(long postId) {
+        return postDao.findOne(postId);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Post> findAllPublishedPosts() {
         return postDao.findAllPublishedPosts();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public List<Post> findAllDrafts() {
         return postDao.findAllDrafts();
@@ -52,36 +55,36 @@ public class PostServiceImpl extends GenericServiceImpl<Post, Long> implements P
     @Override
     public void createPost(Post post) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        post.setAuthor(userDao.findUserByUsername(auth.getName()));
+        post.setAuthor(userDao.findByUsername(auth.getName()));
         post.setCreatedDate(new Date());
-        postDao.create(post);
+        postDao.save(post);
     }
 
     @Override
     public void updatePost(Post post) {
-        Post oldPost = postDao.read(post.getId());
+        Post oldPost = postDao.findOne(post.getId());
         oldPost.setTitle(post.getTitle());
         oldPost.setText(post.getText());
-        postDao.update(oldPost);
+        postDao.save(oldPost);
     }
 
     @Override
     public void publishPost(long postId) {
-        Post post = postDao.read(postId);
+        Post post = postDao.findOne(postId);
         post.setPublishedDate(new Date());
-        postDao.update(post);
+        postDao.save(post);
     }
 
     @Override
     public void addCommentToPost(Comment comment, long postId) {
         comment.setCreatedDate(new Date());
         comment.setApprovedComment(false);
-        comment.setPost(postDao.read(postId));
-        commentDao.create(comment);
+        comment.setPost(postDao.findOne(postId));
+        commentDao.save(comment);
     }
 
     @Override
-    public boolean removePost(long postId) {
-        return postDao.removePost(postId);
+    public void removePost(long postId) {
+        postDao.delete(postId);
     }
 }

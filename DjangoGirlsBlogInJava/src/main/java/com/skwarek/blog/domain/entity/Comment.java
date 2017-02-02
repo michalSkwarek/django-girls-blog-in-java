@@ -20,7 +20,7 @@ import java.util.Date;
 @ToString(exclude = {"author", "createdDate", "approvedComment", "post"})
 public class Comment extends AbstractEntity implements Serializable {
 
-    private static final long serialVersionUID = -7098117967486832113L;
+    private static final long serialVersionUID = -4790309532913180811L;
 
     private String author;
 

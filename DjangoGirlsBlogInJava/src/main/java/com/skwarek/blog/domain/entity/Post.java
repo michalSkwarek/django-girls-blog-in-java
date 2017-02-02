@@ -25,7 +25,7 @@ import java.util.List;
 @ToString(exclude = {"author", "text", "createdDate", "publishedDate", "comments"})
 public class Post extends AbstractEntity implements Serializable {
 
-    private static final long serialVersionUID = -7880798132853619385L;
+    private static final long serialVersionUID = 1850901545913390632L;
 
     @JsonBackReference
     @ManyToOne

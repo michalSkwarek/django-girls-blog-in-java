@@ -20,7 +20,7 @@ import java.util.List;
 @ToString(exclude = {"password", "enabled", "role", "posts"})
 public class User extends AbstractEntity implements Serializable {
 
-    private static final long serialVersionUID = 8677134510405657519L;
+    private static final long serialVersionUID = 8342040766322570609L;
 
     private String username;
 

@@ -28,7 +28,7 @@ public abstract class AbstractJavaBeanTest<T> {
 
     @Test
     public void equalsAndHashCodeContract() throws Exception {
-        EqualsVerifier.forClass(getBeanInstance().getClass()).suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(getBeanInstance().getClass()).withRedefinedSuperclass().suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS).verify();
     }
 
     @Test

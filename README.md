@@ -1,5 +1,5 @@
 # django-girls-blog-in-java
-Blog platform from a tutorial https://tutorial.djangogirls.org/pl/ moved to the Java / JS technologies
+A blog has moved from a tutorial https://tutorial.djangogirls.org/pl/ to Java/JS technologies
 ### Technologies
 - Java 7
 - Spring 4 (Boot, MVC, Security, Test, Data)
